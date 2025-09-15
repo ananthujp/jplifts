@@ -3,6 +3,19 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* Graphite scale (dark neutral greys) */
+  --color-graphite-950: #050505;
+  --color-graphite-900: #131415;
+  --color-graphite-850: #161819;
+  --color-graphite-800: #1a1c1d;
+  --color-graphite-750: #1e2021;
+  --color-graphite-700: #222426;
+  --color-graphite-650: #272b2d;
+  --color-graphite-600: #33373a;
+  --color-graphite-500: #474d50;
+  --color-graphite-400: #51565a;
+  --color-graphite-200: #9ba1a5;
+  --color-graphite-50: #ffffff;
 }
 
 @theme inline {
@@ -10,6 +23,22 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-russo: var(--font-russo);
+  --font-meine: var(--font-meine);
+  --font-mont: var(--font-montserrat);
+  --font-bebas: var(--font-bebas);
+  --color-graphite-50: var(--color-graphite-50);
+  --color-graphite-200: var(--color-graphite-200);
+  --color-graphite-400: var(--color-graphite-400);
+  --color-graphite-500: var(--color-graphite-500);
+  --color-graphite-600: var(--color-graphite-600);
+  --color-graphite-650: var(--color-graphite-650);
+  --color-graphite-700: var(--color-graphite-700);
+  --color-graphite-750: var(--color-graphite-750);
+  --color-graphite-800: var(--color-graphite-800);
+  --color-graphite-850: var(--color-graphite-850);
+  --color-graphite-900: var(--color-graphite-900);
+  --color-graphite-950: var(--color-graphite-950);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,4 +52,10 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+.perspective {
+  perspective: 1000px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
 }
