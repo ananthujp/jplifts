@@ -11,57 +11,33 @@ import { useEffect, useState } from "react";
 const teamMembers = [
   {
     id: 1,
-    name: "Emily Kim",
-    role: "Founder",
-    program: "Pure Bodybuilding Program",
-    message: "This program has changed my life!",
+    name: "Rahul S.",
+    role: "12 Weeks",
+    program: "Fat Loss and Strength Gain",
+    message:
+      "JP Lifts helped me understand how to train with purpose. I learned more in 3 months than in my last 3 years at the gym.",
     img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=3687&auto=format&fit=crop",
     rating: 5,
   },
   {
     id: 2,
-    name: "Michael Steward",
-    role: "Creative Director",
-    program: "The essentials program",
-    message: "It changed the way I look and feel about myself.",
+    name: "Nisha K.",
+    role: "90 Days",
+    program: " Body Recomposition",
+    message:
+      "The best part was the weekly check-ins. Akshay adjusted my plan every time my progress stalled. The results speak for themselves.",
     img: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=3870&auto=format&fit=crop",
     rating: 4.0,
   },
   {
     id: 3,
-    name: "Emma Rodriguez",
-    role: "Lead Developer",
-    program: "Pure Bodybuilding program",
-    message: "I became stronger and more confident after this program.",
+    name: "Arjun M.",
+    role: "16 Weeks",
+    program: " Muscle Gain Phase",
+    message:
+      "I used to follow random YouTube workouts, but now everything I do has a reason. My strength and energy are at an all-time high.",
     img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&auto=format&fit=crop&q=60",
     rating: 3,
-  },
-  {
-    id: 4,
-    name: "Julia Gimmel",
-    role: "UX Designer",
-    program: "the hypertrophy program",
-    message: "It helped me to get rid of my shoulder pain for ever!",
-    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=900&auto=format&fit=crop&q=60",
-    rating: 4.5,
-  },
-  {
-    id: 5,
-    name: "Lisa Anderson",
-    role: "Marketing Manager",
-    program: "the essentials program",
-    message: "Now I look young and vibrant than before!",
-    img: "https://images.unsplash.com/photo-1655249481446-25d575f1c054?w=900&auto=format&fit=crop&q=60",
-    rating: 4,
-  },
-  {
-    id: 6,
-    name: "James Wilson",
-    role: "Product Manager",
-    program: "the essentials program",
-    message: "I never knew I could achieve this level of fitness!",
-    img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=3687&auto=format&fit=crop",
-    rating: 3.5,
   },
 ];
 
@@ -130,13 +106,13 @@ export default function TeamCarousel() {
         {/* Title */}
         <div className=" flex flex-col -gap-4">
           <h1 className=" ml-1 text-slate-600 text-2xl font-russo uppercase">
-            What
+            client
           </h1>
           <h1 className="text-[4rem] md:text-[6rem] text-slate-900 font-russo -mt-10 font-black uppercase tracking-tight pointer-events-none">
-            PEOPLE
+            SUCCESS
           </h1>
           <h1 className="font-bold ml-2 text-shadow-sm text-shadow-amber-50 font-meine text-4xl text-amber-500 -mt-16 text-right">
-            has to say
+            stories
           </h1>
         </div>
         {/* Carousel */}
@@ -159,10 +135,12 @@ export default function TeamCarousel() {
               } else if (offset === 1) {
                 classes +=
                   " z-5 translate-x-52 scale-90 -z-10 opacity-90 grayscale";
-              } else if (offset === 2) {
-                classes +=
-                  " translate-x-[400px] scale-80 -z-20 opacity-70 grayscale";
-              } else if (offset === teamMembers.length - 1) {
+              }
+              // else if (offset === 2) {
+              //   classes +=
+              //     " translate-x-[400px] scale-80 -z-20 opacity-70 grayscale";
+              // }
+              else if (offset === teamMembers.length - 1) {
                 classes +=
                   " z-5 -translate-x-52 scale-90 -z-10 opacity-90 grayscale";
               } else if (offset === teamMembers.length - 2) {
