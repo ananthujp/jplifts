@@ -34,6 +34,15 @@ const data = [
   },
 ];
 function Slider({ pos, setPos, n, scrl_st }) {
+  const [windowHeight, setWindowHeight] = React.useState(0);
+
+  React.useEffect(() => {
+    setWindowHeight(window.innerHeight);
+    const handleResize = () => setWindowHeight(window.innerHeight);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className="flex flex-col relative mt-2 items-center">
       <div
@@ -43,7 +52,7 @@ function Slider({ pos, setPos, n, scrl_st }) {
       {[...Array(n)].map((_, i) => (
         <div key={i} className="flex flex-col items-center">
           <div
-            style={{ height: window.innerHeight * 0.4 }}
+            style={{ height: windowHeight * 0.4 }}
             className={`w-1 bg-amber-500  ${i == 0 && "hidden"}`}
           />
 
@@ -72,6 +81,7 @@ function Slider({ pos, setPos, n, scrl_st }) {
 function MyJourney() {
   const [pos, setPos] = React.useState(0);
   const [scrl_st, setScrlSt] = React.useState(0);
+  const [windowHeight, setWindowHeight] = React.useState(0);
   const containerRef = React.useRef(null);
   const posRef = React.useRef(pos);
 
@@ -80,18 +90,30 @@ function MyJourney() {
   }, [pos]);
 
   React.useEffect(() => {
+    // Initialize window height on client side only
+    setWindowHeight(window.innerHeight);
+
+    const handleResize = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  React.useEffect(() => {
     const el = containerRef.current;
-    if (!el) return;
+    if (!el || !windowHeight) return;
 
     const onScroll = () => {
       const rect = el.getBoundingClientRect();
       // amount scrolled inside this tall container (when top reaches viewport)
       const start = Math.max(0, -rect.top);
-      const maxScroll = (data.length - 1) * window.innerHeight;
+      const maxScroll = (data.length - 1) * windowHeight;
       const local = Math.min(start, maxScroll);
       setScrlSt(local);
-      console.log(local / (window.innerHeight * 0.4));
-      const newPos = Math.floor(local / window.innerHeight);
+      console.log(local / (windowHeight * 0.4));
+      const newPos = Math.floor(local / windowHeight);
       if (newPos !== posRef.current) {
         setPos(newPos);
       }
@@ -100,7 +122,7 @@ function MyJourney() {
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [windowHeight]);
 
   return (
     <div
@@ -111,7 +133,7 @@ function MyJourney() {
       <div className="max-w-4xl relative xh-screen py-16 flex flex-col gap-2 mx-auto ">
         <div
           className={`flex flex-col gap-2 ${
-            scrl_st > 0 && scrl_st < (data.length - 1) * window.innerHeight
+            scrl_st > 0 && scrl_st < (data.length - 1) * windowHeight
               ? "fixed top-0 left-1/2 -translate-x-1/2 z-40 w-full max-w-4xl bg-graphite-900/50 backdrop-blur-md py-4"
               : ""
           }`}
@@ -126,17 +148,17 @@ function MyJourney() {
             of transformation
           </h1>
         </div>
-        {scrl_st > 0 && scrl_st < (data.length - 1) * window.innerHeight && (
+        {scrl_st > 0 && scrl_st < (data.length - 1) * windowHeight && (
           <div className="w-full max-w-4xl h-28 mx-auto" />
         )}
         <div className="flex flex-col h-full mt-24 relative items-center xjustify-center">
           <div
             style={{
               marginTop:
-                scrl_st < window.innerHeight * 0.8 * (data.length - 0.75)
-                  ? scrl_st + 0.2 * window.innerHeight
-                  : (window.innerHeight + 8) * 0.8 * (data.length - 1) +
-                    0.4 * window.innerHeight,
+                scrl_st < windowHeight * 0.8 * (data.length - 0.75)
+                  ? scrl_st + 0.2 * windowHeight
+                  : (windowHeight + 8) * 0.8 * (data.length - 1) +
+                    0.4 * windowHeight,
             }}
             className=" w-6 h-6 absolute rounded-full border border-white"
           />
@@ -151,12 +173,12 @@ function MyJourney() {
                     1 -
                     0.5 *
                       Math.abs(
-                        (scrl_st - i * 8) / (window.innerHeight * 0.4) -
+                        (scrl_st - i * 8) / (windowHeight * 0.4) -
                           (2 * i + 0.5) * 1
                       ),
                   filter: `blur(${
                     Math.abs(
-                      (scrl_st - i * 8) / (window.innerHeight * 0.4) -
+                      (scrl_st - i * 8) / (windowHeight * 0.4) -
                         (2 * i + 0.5) * 1
                     ) * 3
                   }px)`,
@@ -187,7 +209,7 @@ function MyJourney() {
                 className="flex flex-col justify-center items-center"
               >
                 <div
-                  style={{ height: window.innerHeight * 0.4 }}
+                  style={{ height: windowHeight * 0.4 }}
                   className={`w-1 bg-amber-500 `}
                 />
 
@@ -195,7 +217,7 @@ function MyJourney() {
                   //   onClick={() => setPos(i)}
                   className={`rounded-full cursor-pointer relative transition-all bg-amber-500 ${
                     Math.abs(
-                      (scrl_st - i * 8) / (window.innerHeight * 0.4) -
+                      (scrl_st - i * 8) / (windowHeight * 0.4) -
                         (2 * i + 0.5) * 1
                     ) > 0.04
                       ? "w-2 h-2"
@@ -203,7 +225,7 @@ function MyJourney() {
                   }`}
                 />
                 <div
-                  style={{ height: window.innerHeight * 0.4 }}
+                  style={{ height: windowHeight * 0.4 }}
                   className={`w-1 bg-amber-500 ${
                     i == data.length - 1 && "opacity-0"
                   }`}
@@ -215,12 +237,12 @@ function MyJourney() {
                     1 -
                     0.5 *
                       Math.abs(
-                        (scrl_st - i * 8) / (window.innerHeight * 0.4) -
+                        (scrl_st - i * 8) / (windowHeight * 0.4) -
                           (2 * i + 0.5) * 1
                       ),
                   filter: `blur(${
                     Math.abs(
-                      (scrl_st - i * 8) / (window.innerHeight * 0.4) -
+                      (scrl_st - i * 8) / (windowHeight * 0.4) -
                         (2 * i + 0.5) * 1
                     ) * 3
                   }px)`,
