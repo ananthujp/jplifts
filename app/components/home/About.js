@@ -1,12 +1,25 @@
 "use client";
-import { message, Rate } from "antd";
-import {
-  ChevronLeft,
-  ChevronRight,
-  CircleCheck,
-  ShieldCheck,
-} from "lucide-react";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import pgm1 from "../../images/pgm1.jpg";
+import pgm2 from "../../images/pgm2.jpg";
+import pgm3 from "../../images/pgm3.jpg";
+const items = [
+  {
+    img: pgm3,
+    title: "Customized Nutrition Plan",
+    desc: "Tailored to your calorie needs and food preferences.",
+  },
+  {
+    img: pgm1,
+    title: "Structured Training Program",
+    desc: "Focused on progressive overload, strength, and long-term results.",
+  },
+  {
+    img: pgm2,
+    title: "App-Based 1-on-1 Coaching",
+    desc: "Your workouts, progress, and weekly feedback are managed inside a professional fitness app for smooth communication and accountability.",
+  },
+];
 
 export default function About() {
   return (
@@ -45,12 +58,33 @@ export default function About() {
             </p>
           </div>
         </div>
-        <div className="flex flex-col gap-4 px-8 pb-8 text-sm text-slate-700 font-mont">
+        <div className="flex flex-col gap-4 px-8 pb-8 text-sm text-justify text-slate-700 font-mont">
           <h1 className="font-russo text-md -mb-2">
             Each JP Lifts program includes:
           </h1>
-          <ol className="list-decimal list-inside ml-4 space-y-1">
-            <li>
+          <ol className="list-inside  ml-4 space-y-2">
+            {items.map((item, index) => (
+              <li
+                className="h-44 w-full p-4 relative rounded-lg  shadow-md shadow-black/40 overflow-hidden"
+                key={index}
+              >
+                <div className="z-5 absolute inset-0 w-full h-full bg-gradient-to-b from-transparent to-black/80" />
+                <Image
+                  src={item.img}
+                  alt={item.title}
+                  className="absolute inset-0 -z-0 h-full w-full object-cover rounded-md mr-4"
+                />
+                <strong className="absolute bottom-4 w-full left-4 flex flex-col font-black z-10">
+                  <h1 className="text-white text-xl font-russo font-thin">
+                    {item.title}
+                  </h1>
+                  <h2 className="font-mont text-slate-200 text-xs w-3/4">
+                    {item.desc}
+                  </h2>
+                </strong>
+              </li>
+            ))}
+            {/* <li>
               <strong className="font-black">
                 🥗 Customized Nutrition Plan
               </strong>
@@ -70,7 +104,7 @@ export default function About() {
               &nbsp;- your workouts, progress, and weekly feedback are managed
               inside a professional fitness app for smooth communication and
               accountability.
-            </li>
+            </li> */}
           </ol>
           JP Lifts programs are designed for lifters of all experience levels,
           from beginners to advanced athletes. If you are already an experienced

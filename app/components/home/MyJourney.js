@@ -152,7 +152,7 @@ function MyJourney() {
           <div className="w-full max-w-4xl h-28 mx-auto" />
         )}
         <div className="flex flex-col h-full mt-24 relative items-center xjustify-center">
-          <div
+          <motion.div
             style={{
               marginTop:
                 scrl_st < windowHeight * 0.8 * (data.length - 0.75)
@@ -160,6 +160,11 @@ function MyJourney() {
                   : (windowHeight + 8) * 0.8 * (data.length - 1) +
                     0.4 * windowHeight,
             }}
+            // Math.abs(
+            //           (scrl_st - i * 8) / (windowHeight * 0.4) -
+            //             (2 * i + 0.5) * 1
+            //         ) > 0.04
+            animate={{}}
             className=" w-6 h-6 absolute rounded-full border border-white"
           />
           {data.map((_, i) => (
@@ -187,7 +192,17 @@ function MyJourney() {
               >
                 <motion.div
                   key={`img.${i}`}
-                  animate={{ rotate: i % 2 === 0 ? 6 : -6 }}
+                  animate={{
+                    rotate:
+                      Math.abs(
+                        (scrl_st - i * 8) / (windowHeight * 0.4) -
+                          (2 * i + 0.5) * 1
+                      ) > 0.04
+                        ? 0
+                        : i % 2 === 0
+                        ? 6
+                        : -6,
+                  }}
                   className="flex w-96"
                 >
                   <Image
@@ -206,27 +221,50 @@ function MyJourney() {
             /> */}
               <div
                 key={i}
-                className="flex flex-col justify-center items-center"
+                className="flex flex-col xjustify-center items-center"
               >
                 <div
                   style={{ height: windowHeight * 0.4 }}
-                  className={`w-1 bg-amber-500 `}
-                />
+                  className={`w-1 relative bg-amber-500/50 `}
+                >
+                  {/* <motion.div
+                    style={
+                      Math.abs(scrl_st - i * 8) / (windowHeight * 0.4) - i > 0
+                        ? {
+                            height:
+                              0.2 * windowHeight +
+                              Math.abs(scrl_st - i * 8) -
+                              2 * i * windowHeight * 0.4,
+                          }
+                        : { height: 0 }
+                    }
+                    className="absolute inset-0 w-1 xh-full bg-amber-500"
+                  /> */}
+                </div>
 
-                <div
+                <motion.div
                   //   onClick={() => setPos(i)}
-                  className={`rounded-full cursor-pointer relative transition-all bg-amber-500 ${
+                  animate={
                     Math.abs(
                       (scrl_st - i * 8) / (windowHeight * 0.4) -
                         (2 * i + 0.5) * 1
                     ) > 0.04
-                      ? "w-2 h-2"
-                      : "w-4 h-4"
-                  }`}
+                      ? {
+                          width: "8px",
+                          height: "8px",
+                          backgroundColor: "var(--color-amber-500)",
+                        }
+                      : {
+                          width: "16px",
+                          height: "16px",
+                          backgroundColor: "white",
+                        }
+                  }
+                  className={`rounded-full cursor-pointer  mx-auto relative bg-amber-500`}
                 />
-                <div
+                <motion.div
                   style={{ height: windowHeight * 0.4 }}
-                  className={`w-1 bg-amber-500 ${
+                  className={`w-1 bg-amber-500/50 ${
                     i == data.length - 1 && "opacity-0"
                   }`}
                 />
@@ -255,6 +293,14 @@ function MyJourney() {
                   //   initial={{ opacity: 0, y: -10 }}
                   //   animate={{ opacity: 1, y: 0, transition: { duration: 0.25 } }}
                   //   exit={{ opacity: 0, y: 50 }}
+                  animate={
+                    Math.abs(
+                      (scrl_st - i * 8) / (windowHeight * 0.4) -
+                        (2 * i + 0.5) * 1
+                    ) > 0.04
+                      ? { fontSize: "22px", opacity: 0.8 }
+                      : { fontSize: "24px", opacity: 1 }
+                  }
                   className="text-2xl font-russo font-light text-slate-100"
                 >
                   {data[i].title}{" "}
@@ -264,7 +310,15 @@ function MyJourney() {
                   //   initial={{ opacity: 0, y: -10 }}
                   //   animate={{ opacity: 1, y: 0, transition: { duration: 0.25 } }}
                   //   exit={{ opacity: 0, y: 50 }}
-                  className="font-mont"
+                  animate={
+                    Math.abs(
+                      (scrl_st - i * 8) / (windowHeight * 0.4) -
+                        (2 * i + 0.5) * 1
+                    ) > 0.04
+                      ? { opacity: 0.6 }
+                      : { opacity: 1 }
+                  }
+                  className="font-mont text-slate-200"
                 >
                   {data[i].desc}
                 </motion.p>
